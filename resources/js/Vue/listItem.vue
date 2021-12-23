@@ -1,7 +1,7 @@
 <template>
   <div :class="[item.completed ? 'completed': '', 'item']">
     <input type="checkbox"
-    v-bind="item.completed"
+    v-model="item.completed"
     @change="updateChange()">
       <span>{{item.name}}</span>
     <font-awesome-icon
@@ -17,14 +17,14 @@ export default {
   props: ["item"],
   methods: {
     trashItem() {
-      axios.delete(`api/item/${this.item.id}`)
+      axios.delete('api/item/'+ this.item.id)
       .then(res => {
         this.$emit('itemchanged');
       }).catch(err => console.log(err));
     },
 
     updateChange() {
-      axios.put(`api/item/${this.item.id}`, {
+      axios.put('api/item/'+ this.item.id, {
         item: this.item
       })
       .then(res => {
@@ -57,8 +57,13 @@ export default {
 }
 
 .trash-icon {
-  color: rgb(165, 69, 69);
+  color: rgb(124, 124, 124);
   margin-left: auto;
+  cursor: pointer;
+}
+
+.trash-icon:hover {
+  color: rgb(165, 69, 69);
 }
 
 .completed {
